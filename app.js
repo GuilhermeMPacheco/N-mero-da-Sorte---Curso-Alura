@@ -1,3 +1,4 @@
+/*
 alert("Boas Vindas ao Jogo do Número Secreto!");
 
 let numeroMax = 5000;
@@ -33,3 +34,16 @@ while(chute != numeroSecreto) {
 // Após acertar a resposta
 let palavraTentativa = tentativas > 1 ? "tentativas" : "tentativa";
 alert(`Você acertou o número secreto ${numeroSecreto} com ${tentativas} ${palavraTentativa}`);
+*/
+
+let titulo = document.querySelector('h1');
+titulo.innerHTML = "Hora do Desafio!";
+
+let paragrafo = document.querySelector('p');
+paragrafo.innerHTML = "Escolha um número entre 1 e 10";
+
+function verificarChute() {
+    let number1 = Number(prompt("Escolha um número:"));
+    let number2 = Number(prompt("Escolha outro número:"));
+    alert(`A soma de seus dois números foi: ${number1 + number2}`);
+}
