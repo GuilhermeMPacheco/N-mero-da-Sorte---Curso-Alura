@@ -18,7 +18,6 @@ mensagemInicial()
 // Número Aleatório
 function gerarNumeroAleatorio() {
    let numeroEscolhido = parseInt(Math.random() * (numeroMax+1-numeroMin) +numeroMin);
-    console.log(listaNumerosSorteados)
    if (listaNumerosSorteados.includes(numeroEscolhido)) {
     if(listaNumerosSorteados.length == numeroMax+1-numeroMin) {listaNumerosSorteados = [];}
     return gerarNumeroAleatorio();
