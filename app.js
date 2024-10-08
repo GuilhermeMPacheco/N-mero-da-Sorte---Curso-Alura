@@ -1,10 +1,9 @@
 let listaNumerosSorteados = [];
-let numeroMax = 4;
-let numeroMin = 1; // Número mínimo não funciona ainda
+let numeroMax = 10;
+let numeroMin = 1;
 let numeroSecreto = gerarNumeroAleatorio(); 
 let tentativas = 0;
 
-console.log(numeroSecreto);
 // Textos
 function textoNaTela (tag , texto) {
     let campo = document.querySelector(tag);
@@ -18,13 +17,13 @@ mensagemInicial()
 
 // Número Aleatório
 function gerarNumeroAleatorio() {
-   let numeroEscolhido = parseInt(Math.random() * numeroMax +1);
+   let numeroEscolhido = parseInt(Math.random() * (numeroMax+1-numeroMin) +numeroMin);
+    console.log(listaNumerosSorteados)
    if (listaNumerosSorteados.includes(numeroEscolhido)) {
-    if(listaNumerosSorteados.length == numeroMax) {listaNumerosSorteados = [];}
+    if(listaNumerosSorteados.length == numeroMax+1-numeroMin) {listaNumerosSorteados = [];}
     return gerarNumeroAleatorio();
    } else {
     listaNumerosSorteados.push(numeroEscolhido);
-    console.log(listaNumerosSorteados);
     return numeroEscolhido;
    }
 }
@@ -60,6 +59,7 @@ function verificarChute() {
     }
 }
 
+// Reiniciar Jogo
 function reiniciarJogo() {
     limparCampo();
     tentativas = 0;
