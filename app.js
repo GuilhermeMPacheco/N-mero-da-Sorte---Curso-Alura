@@ -1,49 +1,69 @@
-/*
-alert("Boas Vindas ao Jogo do Número Secreto!");
-
-let numeroMax = 5000;
-let numeroMin = 1;
-let numeroSecreto = parseInt(Math.random() * numeroMax +1);
-let chute;
+let listaNumerosSorteados = [];
+let numeroMax = 4;
+let numeroMin = 1; // Número mínimo não funciona ainda
+let numeroSecreto = gerarNumeroAleatorio(); 
 let tentativas = 0;
 
-// Enquanto o chute não for igual ao número secreto o código continuará rodando
-while(chute != numeroSecreto) { 
-    chute = prompt(`Escolha um número entre ${numeroMin} e ${numeroMax}!`);
+console.log(numeroSecreto);
+// Textos
+function textoNaTela (tag , texto) {
+    let campo = document.querySelector(tag);
+    campo.innerHTML = texto;
+};
+function mensagemInicial() {
+textoNaTela('h1', 'Hora do Desafio!');
+textoNaTela('p', `Escolha um número entre ${numeroMin} e ${numeroMax}`);
+}
+mensagemInicial()
 
-    // Quando ele chutar:
-    if(!isNaN(chute)) {
-        if(chute >= numeroMin && chute <= numeroMax) {
-            tentativas++ 
+// Número Aleatório
+function gerarNumeroAleatorio() {
+   let numeroEscolhido = parseInt(Math.random() * numeroMax +1);
+   if (listaNumerosSorteados.includes(numeroEscolhido)) {
+    if(listaNumerosSorteados.length == numeroMax) {listaNumerosSorteados = [];}
+    return gerarNumeroAleatorio();
+   } else {
+    listaNumerosSorteados.push(numeroEscolhido);
+    console.log(listaNumerosSorteados);
+    return numeroEscolhido;
+   }
+}
 
-            //Mensagens pro console
-            console.log("O número Secreto é " + numeroSecreto);
-            console.log(`Seu chute foi: ${chute}`);
-            console.log(`Chute é igual ao número secreto? ${chute == numeroSecreto}`);
-            console.log(`Você já teve ${tentativas} tentativas.`);
+//Limpar Campo
+function limparCampo() {
+    let chute = document.querySelector('input');
+    chute.value = '';
+}
 
-            if(chute == numeroSecreto) {
-                break;
-            } else {
-                let menorMaior = chute < numeroSecreto ? "maior" : "menor";
-                alert(`O Número Secreto é ${menorMaior} que ${chute}`);
-
-            }} else{alert(`O Número deve ser entre ${numeroMin} e ${numeroMax}!`);}
-    } else {alert('Isso não é um número!');}}
-
-// Após acertar a resposta
-let palavraTentativa = tentativas > 1 ? "tentativas" : "tentativa";
-alert(`Você acertou o número secreto ${numeroSecreto} com ${tentativas} ${palavraTentativa}`);
-*/
-
-let titulo = document.querySelector('h1');
-titulo.innerHTML = "Hora do Desafio!";
-
-let paragrafo = document.querySelector('p');
-paragrafo.innerHTML = "Escolha um número entre 1 e 10";
-
+// Botão Chutar
 function verificarChute() {
-    let number1 = Number(prompt("Escolha um número:"));
-    let number2 = Number(prompt("Escolha outro número:"));
-    alert(`A soma de seus dois números foi: ${number1 + number2}`);
+    let chute = document.querySelector('input').value;
+    if(chute >= numeroMin && chute <= numeroMax) {
+        tentativas++;
+        if(chute == numeroSecreto) {
+            let palavraTentativa = tentativas > 1 ? "tentativas" : "tentativa";
+            let textoAcerto = `Você acertou o número secreto (${numeroSecreto})!`;
+            let textoPAcerto = `Você acertou com ${tentativas} ${palavraTentativa}!`;
+            textoNaTela('h1', textoAcerto);
+            textoNaTela('p', textoPAcerto);
+            document.getElementById('reiniciar').removeAttribute('disabled');
+
+        } else {
+            let menorMaior = chute < numeroSecreto ? "maior" : "menor";
+            let textoMenorMaior = `O número é ${menorMaior} que ${chute}`;
+            textoNaTela('h1', textoMenorMaior);
+            limparCampo();
+        }} 
+    else{
+        let textoNumMaior = `O Número deve ser entre ${numeroMin} e ${numeroMax}!`;
+        textoNaTela('p', textoNumMaior);
+    }
+}
+
+function reiniciarJogo() {
+    limparCampo();
+    tentativas = 0;
+    numeroSecreto = gerarNumeroAleatorio();
+    mensagemInicial();
+    document.getElementById('reiniciar').setAttribute('disabled', true);
 }
